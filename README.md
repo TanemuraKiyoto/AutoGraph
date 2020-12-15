@@ -29,7 +29,7 @@ copy_conformers: (Boolean) make subdirectories for clusters populated by their c
 silence: (Boolean) if True, forgo all print statements
 hetatm: (Boolean) if True, read ATOM and HETATM for PDB files. If False, only read ATOM
 
-# the AutoGraph.run(...) method
+## the AutoGraph.run(...) method
 AutoGraph.run(inpath, outpath, Epath = '', E_label = 'energy')
 ----------inputs---------
 inpath: (string) path to the input xyz files (e.g. 'data/xyzfiles/')
@@ -40,18 +40,18 @@ E_label: (string) column name of energy values for the file located at Epath.
 
 Once you run the method, it will save relevant files to the path specified by outpath
 
-# Description of output files and directories:
-----------files----------
-affinityMatrix.csv: The symmetric affinity matrix made by applying a Gaussian kernel to the RMSD matrix. Indices and columns correspond to the file names.
-filteredAffinityMatrix.csv: The affinity matrix after applying the adaptive threshold to remove low weight edges.
-communityStats.csv: Descriptive statistics applied to each cluster as well as the whole data ('global') and collection of centroids ('centers')
-cluster_summary.csv: Clustering output by each file. The cluster column specifies the cluster to which the file is assigned. The centroid column specifies whether the file is a centroid (1) or not (0)
-rmsdMatrix.csv: The symmetric RMSD matrix made by calculating the atomic RMSD between all conformers considered. Indices and columns correspond	 to the file names.
--------directories-------
-clusterX: contains all files assigned to clusterX
-centers: Contains all files chosen as centroids. 
+## Description of output files and directories:
+### files
+- affinityMatrix.csv: The symmetric affinity matrix made by applying a Gaussian kernel to the RMSD matrix. Indices and columns correspond to the file names.
+- filteredAffinityMatrix.csv: The affinity matrix after applying the adaptive threshold to remove low weight edges.
+- communityStats.csv: Descriptive statistics applied to each cluster as well as the whole data ('global') and collection of centroids ('centers')
+- cluster_summary.csv: Clustering output by each file. The cluster column specifies the cluster to which the file is assigned. The centroid column specifies whether the file is a centroid (1) or not (0)
+- rmsdMatrix.csv: The symmetric RMSD matrix made by calculating the atomic RMSD between all conformers considered. Indices and columns correspond	 to the file names.
+### directories
+- clusterX: contains all files assigned to clusterX
+- centers: Contains all files chosen as centroids. 
 
-# Possible questions/problems:
+## Possible questions/problems:
 - Do I need to know Python to use AutoGraph?
   No, you can run the program interactively, with the program walking you through the necessary inputs. Refer to the Quick Start Guide 
 - Why can't I cluster the conformers saved as PDB files?
@@ -67,7 +67,7 @@ centers: Contains all files chosen as centroids.
 - Can I run AutoGraph on protein-protein complexes?
   With some work, yes. AutoGraph computes an atomic RMSD matrix based on superimposing all atoms, which is not typically used for PPI complexes. If the RMSD matrix is provided as a csv in the outpath, AutoGraph will read this matrix and perform clustering based on it. Run AutoGraph on a small subset of your data to see the formatting. Put your desired similarity value (ligand RMSD, interface RMSD, etc) in this format, save it as 'rmsdMatrix.csv' in the outpath, then run AutoGraph. AutoGraph will not include PPI based metrics in the future due to the variablibity in how to read the files, which compromises the integrity of its results.
 
-# Notes:
+## Notes:
 For comparison purpose, we included our implementation of the following conformational clustering algorithms. If these algorithms were used in your publication, please reference the original publications of the algorithms:
 - NMRCLUST: Kelley, L.; Gardner, S.; Sutcliffe, M. Prot. Eng. 1996, 9, 1063. DOI: 10.1093/protein/9.11.1063
 - Representative Conformer Kmeans: Kim, H.; Jang, C.; Yadav, D. K.; Kim, M. H. J. Cheminform. 2017. 9, 1. DOI: 10.1186/s13321-017-0208-0
