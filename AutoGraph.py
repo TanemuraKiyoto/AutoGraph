@@ -1,20 +1,16 @@
-# 2020-04-17
+# 2020-12-15
 
 # Kiyoto Aramis Tanemura
 
-# Provided a directory of xyz files, cluster structures by RMSD values. Corresponding atoms must be ordered consistently between all files.
-# Initial draft yielded disparate clustering. I plan to implement clustering by modularity (https://arxiv.org/pdf/0803.0476.pdf).
-# First, denoise the nodes by removing distal nodes. However, do not introduce disconnects in graph.
-# To achieve this, restrain such that the graph is connected, however threshold is maximized (most stringent)
-# Then cluster by modularity
-# Finally, determine centers of communities by identifying the lowest ANI energy structure
+# Cluster metabolite conformers by the AutoGraph protocol.
+
 import numpy as np
 from pandas import DataFrame, read_csv
 import os, sys
 from random import sample
-# Modified 2020-09-17. import errors
+
 if True:
-#if __name__ == '__main__':
+if __name__ == '__main__':
     from lib.functions import *
     from lib.rmsd import rmsd, assign_remaining_files, rmsdMatrix
     from lib.LouvainClustering import Louvain
