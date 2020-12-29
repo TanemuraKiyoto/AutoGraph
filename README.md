@@ -10,10 +10,10 @@ Atomic RMSD is computed between all conformers (or a randomized sample) in a dir
 2. Copy this package to a convenient location (e.g. in src directory of your working directory). Specify paths if located elsewhere
 3. Consolidate conformer files (XYZ, PDB, or MOL) in one directory
 4. If energy values have been computed for each conformers, save it in a csv file. The indices located at the left-most column must be file names (e.g. 'opt-ani_geom_123.xyz'). The column name should be 'energy' or specified when you call the AutoGraph function. If not computed, the cluster centers are chosen using a graph based metric
-5. Choose whether you want to run AutoGraph interactively through a program or in your own python script. The program will prompt you for the inputs and perform AutoGraph on your data. Choose the program if you have only a few systems to consider or for a demo. Choose the script if you need to automate the protocol over many systems or you are recording the metrics over many clustering protocols.
+5. Choose whether you want to run AutoGraph interactively through a program or in your own python script. The program will prompt you for the inputs and perform AutoGraph on your data. Choose the program if you have only a few systems to consider or for a demo. Choose the script if you need to automate the protocol over many systems or you are recording the metrics over many clustering protocols.\
 ----interactive program route----
 6. Run AutoGraph.py located in the package ("python AutoGraph/AutoGraph.py")
-7. Answer the series of prompts and the AutoGraph protocol will be deployed on your data. The message 'Job complete' indicates completion of job. Check results saved in the output path
+7. Answer the series of prompts and the AutoGraph protocol will be deployed on your data. The message 'Job complete' indicates completion of job. Check results saved in the output path\
 -----automated script route----
 6. Import the function in your python script >>> from AutoGraph import AutoGraph
 7. Specify the parameters when constructing the AutoGraph instance by supplying the relevant arguments (see below) e.g. >>> ag = AutoGraph(randomize = True)
@@ -21,21 +21,21 @@ Atomic RMSD is computed between all conformers (or a randomized sample) in a dir
 9. The message 'Job complete' indicates completion of job. Check results saved in the path to the output, specified in step 6.
 
 ## the AutoGraph class:
-AutoGraph(randomize = False, subset = 0, copy_conformers = True, silence = False, hetatm = True)
---------parameters-------
-randomize: (Boolean) randomize file order. The Louvain clustering algorithm is sensitive to order
-subset: (int) RMSD calculation scales O(n(n-1)/2). If too many conformers present, take a subset of files to perform clustering, then assign remainder by lowest RMSD to centroids
-copy_conformers: (Boolean) make subdirectories for clusters populated by their conformers. Turn to False if copying all structures compromises device memory
-silence: (Boolean) if True, forgo all print statements
+AutoGraph(randomize = False, subset = 0, copy_conformers = True, silence = False, hetatm = True)\
+--------parameters-------\
+randomize: (Boolean) randomize file order. The Louvain clustering algorithm is sensitive to order\
+subset: (int) RMSD calculation scales O(n(n-1)/2). If too many conformers present, take a subset of files to perform clustering, then assign remainder by lowest RMSD to centroids\
+copy_conformers: (Boolean) make subdirectories for clusters populated by their conformers. Turn to False if copying all structures compromises device memory\
+silence: (Boolean) if True, forgo all print statements\
 hetatm: (Boolean) if True, read ATOM and HETATM for PDB files. If False, only read ATOM
 
 ## the AutoGraph.run(...) method
-AutoGraph.run(inpath, outpath, Epath = '', E_label = 'energy')
-----------inputs---------
-inpath: (string) path to the input xyz files (e.g. 'data/xyzfiles/')
-outpath: (string) path to the output. Directory does not need to already exist
------optional inputs-----
-Epath: (string) path to energy data csv file for choosing centroids. If not provided, choose centroid by max in-community weighted degree
+AutoGraph.run(inpath, outpath, Epath = '', E_label = 'energy')\
+----------inputs---------\
+inpath: (string) path to the input xyz files (e.g. 'data/xyzfiles/')\
+outpath: (string) path to the output. Directory does not need to already exist\
+-----optional inputs-----\
+Epath: (string) path to energy data csv file for choosing centroids. If not provided, choose centroid by max in-community weighted degree\
 E_label: (string) column name of energy values for the file located at Epath.
 
 Once you run the method, it will save relevant files to the path specified by outpath
@@ -76,7 +76,7 @@ For comparison purpose, we included our implementation of the following conforma
 - Ward + DynamicTreeCut applied to find representative conformers: Kim, H.; Jang, C.; Yadav, D. K.; Kim, M. H. J. Cheminform. 2017. 9, 1. DOI: 10.1186/s13321-017-0208-0
 
 If you use AutoGraph in your publication, please cite as follows:
-Kiyoto A. Tanemura, Susanta Das, Kenneth M. Merz Jr. AutoGraph: Autonomous Graph Based Clustering of Metabolite Conformations. Manuscript in preparation
+Tanemura, Kiyoto; Das, Susanta; M. Merz Jr., Kenneth (2020): AutoGraph: Autonomous Graph Based Clustering of Small-Molecule Conformations. ChemRxiv. Preprint. https://doi.org/10.26434/chemrxiv.13491543.v1 
 
 Kiyoto Aramis Tanemura
 Kenneth Merz Research Group
