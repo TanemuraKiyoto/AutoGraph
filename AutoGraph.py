@@ -9,8 +9,7 @@ from pandas import DataFrame, read_csv
 import os, sys
 from random import sample
 
-#if __name__ == '__main__':
-if True:
+if __name__ == '__main__':
     from lib.functions import *
     from lib.rmsd import rmsd, assign_remaining_files, rmsdMatrix
     from lib.LouvainClustering import Louvain
