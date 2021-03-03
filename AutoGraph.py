@@ -9,7 +9,8 @@ from pandas import DataFrame, read_csv
 import os, sys
 from random import sample
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
+if True:
     from lib.functions import *
     from lib.rmsd import rmsd, assign_remaining_files, rmsdMatrix
     from lib.LouvainClustering import Louvain
@@ -206,7 +207,7 @@ if __name__ == '__main__':
             print('Response not recognized. Conformer files will be copied into respective subdirectories.')
             copy_conformers = True
     ag = AutoGraph(randomize, subset, copy_conformers)
-    print('Enter input path to the XYZ or PDB files to cluster. (Where your files are located on your computer.)')
+    print('Enter input path to the directory containing XYZ or PDB files to cluster. (Where your files are located on your computer.)')
     inpath = input()
     print('Enter output path to the directory to save results.')
     outpath = input()
