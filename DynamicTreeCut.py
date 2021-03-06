@@ -123,7 +123,7 @@ if __name__ == '__main__':
         print('Response not recognized. Conformer files will be copied into respective subdirectories.')
         copy_conformers = True
     dtc = DynamicTreeCut(tau, copy_conformers)
-    print('Enter input path to the XYZ or PDB files to cluster. (Where your files are located on your computer.)')
+    print('Enter input path to the directory containing XYZ/PDB/MOL files to cluster. (Where your files are located on your computer.)')
     inpath = input()
     print('Enter output path to the directory to save results.')
     outpath = input()
