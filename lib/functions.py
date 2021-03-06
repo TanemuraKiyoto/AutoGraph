@@ -8,8 +8,6 @@
 import numpy as np
 import pandas as pd
 import os
-#from Bio.PDB import PDBParser
-#from Bio.PDB.Selection import unfold_entities
 
 def xyzToArray(xyzFilePath, keepH = False):
     # Read xyz coordinates into numpy array. Remove hydrogen atoms
@@ -30,16 +28,26 @@ def pdbToArray(pdbfilePath, hetatm = True, keepH = False):
     # hetatm: (Boolean) if True, read coordinates for ATOM and HETATM. If False, read only coordinates ATOM
     with open(pdbfilePath, 'r') as f:
         lines = f.readlines()
-    lines = [x.split() for x in lines]
+#### Modified 2021-03-05. Bug reading PDB files. updated so that compatible with PDB files formatted as according to Chimera (https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html)
+    lines = [x for x in lines if len(x) > 4]
     if hetatm:
-        lines = [x for x in lines if x[0] in ['ATOM', 'HETATM']]
+        lines = [x for x in lines if x[:4] in ['ATOM', 'HETA']]
     else:
-        lines =[x for x in lines if x[0] == 'ATOM']
-    if keepH:
-        lines = [x for x in lines]
-    else:
-        lines = [x for x in lines if x[2][0] != 'H']
-    coords = [x[5:8] for x in lines]
+        lines = [x for x in lines if x[:4] == 'ATOM']
+    if not keepH:
+        lines = [x for x in lines if x[13] != 'H']
+    coords = [[x[30:38], x[38:46], x[46:54]] for x in lines]
+####
+#    lines = [x.split() for x in lines]
+#    if hetatm:
+#        lines = [x for x in lines if x[0] in ['ATOM', 'HETATM']]
+#    else:
+#        lines =[x for x in lines if x[0] == 'ATOM']
+#    if keepH:
+#        lines = [x for x in lines]
+#    else:
+#        lines = [x for x in lines if x[2][0] != 'H']
+#    coords = [x[6:9] for x in lines]
     for i in range(len(coords)):
         coords[i] = [float(x) for x in coords[i]]
     return np.array(coords)
@@ -68,7 +76,7 @@ def fileToArray(filepath, hetatm = True, keepH=False):
     elif file_extension == 'mol':
         return molToArray(filepath, keepH)
     else:
-        print('File extension not recognized when reading. Only files with extensions "xyz" or "pdb" are read and considered.')
+        print('File extension not recognized when reading. Only files with extensions "xyz", "pdb", or "mol" are read and considered.')
         print('Program terminated. Either remove exception or modify file path and be sure they correspond to standard xyz or pdb format')
         quit()
 
