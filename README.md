@@ -8,7 +8,7 @@ Atomic RMSD is computed between all conformers (or a randomized sample) in a dir
 ## Quick start guide:
 1. Install any missing dependencies (Pandas, Numpy, Scipy)
 2. Copy this package to a convenient location (e.g. in src directory of your working directory). Specify paths if located elsewhere
-3. Consolidate conformer files (XYZ, PDB, or MOL) in one directory
+3. Consolidate conformer files (XYZ, PDB, or MOL) in one directory. The directory will contain multiple files, each file specifying the coordinates for one conformer.
 4. If energy values have been computed for each conformers, save it in a csv file. The indices located at the left-most column must be file names (e.g. 'opt-ani_geom_123.xyz'). The column name should be 'energy' or specified when you call the AutoGraph function. If not computed, the cluster centers are chosen using a graph based metric
 5. Choose whether you want to run AutoGraph interactively through a program or in your own python script. The program will prompt you for the inputs and perform AutoGraph on your data. Choose the program if you have only a few systems to consider or for a demo. Choose the script if you need to automate the protocol over many systems or you are recording the metrics over many clustering protocols.\
 ----interactive program route----
@@ -58,14 +58,14 @@ Once you run the method, it will save relevant files to the path specified by ou
   The variability in PDB file format limits the deployment of AutoGraph on all PDB files. Please consider drafting a script to convert your PDB file to XYZ files to perform AutoGraph. Run AutoGraph with copy_conformers = False. Then use the cluster_summary.csv saved in the output directory to inform your downstream use of clustered conformers
 - Why do I get different clustering results depending on the iteration?
   The Louvain algorithm used for clustering is deterministic, yet the result depends on file order (https://arxiv.org/pdf/0803.0476.pdf). A change in file order may result in a change in clustering result.
-- I want to take the average over the AutoGraph output iterated over several randomization
+- I want to take the average over the AutoGraph output iterated over several randomization.
   Call the AutoGraph function inside a loop. Multiple calls, however, may duplicate files in the outputs or overwrite summary files. Therefore, specify copy_conformers=False in the function, and rename the output files (e.g. "cluster_summary.csv" -> "iter3_cluster_summary.csv") between calls. Also, consider specifying silence=True in the argument to avoid crowding the screen
 - The clustering terminates with an error when finding the threshold weight.
   If the values for weights in the affinity matrix are too small, even the complete graph is registered as empty.
 - Can I run AutoGraph on protein conformations?
-  Yes. You may want to extract the backbone atoms only and save files in a dedicated directory as PDB file (e.g. >>> grep 'CA' original1.pdb > backbone/extracted1.pdb ). Be sure all atoms are consistent between all files. Then run AutoGraph on the files in the directory containing only backbone atoms.
+  Yes. You may want to extract the backbone atoms only and save files in a dedicated directory as PDB file (e.g. >>> grep 'CA' original1.pdb > backbone/extracted1.pdb ). Be sure all atoms are consistent between all files. Then run AutoGraph on the files in the directory containing only backbone atoms. Please know the performance of AutoGraph has only been validated for metabolites.
 - Can I run AutoGraph on protein-protein complexes?
-  With some work, yes. AutoGraph computes an atomic RMSD matrix based on superimposing all atoms, which is not typically used for PPI complexes. If the RMSD matrix is provided as a csv in the outpath, AutoGraph will read this matrix and perform clustering based on it. Run AutoGraph on a small subset of your data to see the formatting. Put your desired similarity value (ligand RMSD, interface RMSD, etc) in this format, save it as 'rmsdMatrix.csv' in the outpath, then run AutoGraph. AutoGraph will not include PPI based metrics in the future due to the variablibity in how to read the files, which compromises the integrity of its results.
+  With some work, yes. AutoGraph computes an atomic RMSD matrix based on superimposing all atoms, which is not typically used for PPI complexes. If the RMSD matrix is provided as a csv in the outpath, AutoGraph will read this matrix and perform clustering based on it. Run AutoGraph on a small subset of your data to see the formatting. Put your desired similarity value (ligand RMSD, interface RMSD, etc) in this format, save it as 'rmsdMatrix.csv' in the outpath, then run AutoGraph. AutoGraph will not include PPI based metrics currently or in the future due to the variablibity in how to read the files, which compromises the integrity of its results. Please know the performance of AutoGraph has only been validated for metabolites.
 
 ## Notes:
 For comparison purpose, we included our implementation of the following conformational clustering algorithms. If these algorithms were used in your publication, please reference the original publications of the algorithms:
@@ -76,7 +76,7 @@ For comparison purpose, we included our implementation of the following conforma
 - Ward + DynamicTreeCut applied to find representative conformers: Kim, H.; Jang, C.; Yadav, D. K.; Kim, M. H. J. Cheminform. 2017. 9, 1. DOI: 10.1186/s13321-017-0208-0
 
 If you use AutoGraph in your publication, please cite as follows:
-Tanemura, Kiyoto; Das, Susanta; M. Merz Jr., Kenneth (2020): AutoGraph: Autonomous Graph Based Clustering of Small-Molecule Conformations. ChemRxiv. Preprint. https://doi.org/10.26434/chemrxiv.13491543.v1 
+Tanemura, K. A.; Das, S.; Merz Jr., K. M. J. Chem. Inf. Model. 2021, 61, 1647. DOI: 10.1021/acs.jcim.0c01492
 
 Kiyoto Aramis Tanemura
 Kenneth Merz Research Group
@@ -85,4 +85,4 @@ Michigan State University
 tanemur1@msu.edu
 
 2020-05-17
-Last updated 2020-12-15
+Last updated 2021-06-10
