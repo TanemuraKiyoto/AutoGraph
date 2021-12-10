@@ -10,6 +10,7 @@ import os, sys
 from random import sample
 
 if __name__ == '__main__':
+#if True:
     from lib.functions import *
     from lib.rmsd import rmsd, assign_remaining_files, rmsdMatrix
     from lib.LouvainClustering import Louvain
@@ -137,11 +138,11 @@ class AutoGraph:
             if not self.silence:
                 print('Cluster statistics: ')
                 print(stats)
-
-        cluster_summary(outpath, self.master_fileList, communityAssignment, self.centroids, cluster_names)
+# bug found by elifzeng and corrected by KAT (2021-12-10). changed self.master_fileList to self.sample_fileList
+        cluster_summary(outpath, self.sample_fileList, communityAssignment, self.centroids, cluster_names)
 
         if self.copy_conformers:
-            save_outputs(inpath, outpath, self.master_fileList, communityAssignment, self.centroids, cluster_names)
+            save_outputs(inpath, outpath, self.sample_fileList, communityAssignment, self.centroids, cluster_names)
 
         if not self.silence:
             print('Number of structures: ', len(self.master_fileList))
