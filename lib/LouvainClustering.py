@@ -18,7 +18,7 @@ def getModularity(affinityMatrix, communityAssignments, resolution = 1.0):
         communityIndices = [i for i in range(len(communityAssignments)) if communityAssignments[i] == C]
         sigma_in = np.sum(affinityMatrix[communityIndices, :][:, communityIndices])
         sigma_tot = np.sum(affinityMatrix[communityIndices, :])
-        Q += sigma_in / two_m - resolution * (sigma_tot / (2 * two_m)) ** 2
+        Q += sigma_in / two_m - resolution * (sigma_tot / two_m) ** 2
     return Q
 
 def LouvainPhase1(affinityMatrix, communityAssignment, Q_threshold, max_iter, resolution):
